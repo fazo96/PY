@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import mechanize
 from bs4 import *
 import re
-from easygui import passwordbox
+import getpass
+import string
 br=mechanize.Browser()
 br.set_handle_robots(False)
 def menu():
@@ -30,7 +32,7 @@ def menu():
         return menu()
 def login():
         nome=raw_input("INSERISCI IL NOME UTENTE: ")
-        passw=passwordbox("INSERISCI LA PASSWORD: ",title="PASSWORD")
+        passw=getpass.getpass()
         r=br.open("https://galilei-cr-sito.registroelettronico.com/votes")
         br.select_form(nr=0)
         br.form["username"]=nome
@@ -46,7 +48,7 @@ def login():
             html_doc=(scrivo)
             soup=BeautifulSoup(html_doc)
             for node in soup.findAll('h2',{'id':'student_name'}):
-                nome_studente=''.join(node.findAll(text=True))
+                nome_studente=string.join(node.findAll(text=True))
                 print("\nBenvenuto, %s!\n") %(nome_studente)
         else:
             print("\nErrore. Nome utente e/o password errati.\n")
@@ -77,7 +79,7 @@ def getvoti():
     print("(Ordine per data)\n\n")
     print("===================================================")
     for node in soup.findAll('p',{'class':'day_description'}):
-        print ''.join(node.findAll(text=True))
+        print(string.join(node.findAll(text=True)))
     print("====================================================")
     scrivo.close()
 def getass():
@@ -92,7 +94,7 @@ def getass():
     print("(Ordine per data)\n\n")
     print("====================================================")
     for node in soup.findAll('p',{'class':'day_description'}):
-        print ''.join(node.findAll(text=True))
+        print(string.join(node.findAll(text=True)))
     print("====================================================")
     scrivo.close()
 def getargo():
@@ -107,7 +109,7 @@ def getargo():
     print("(Ordine per data)\n\n")
     print("====================================================")
     for node in soup.findAll('p',{'class':'day_description'}):
-        print ''.join(node.findAll(text=True))
+        print(string.join(node.findAll(text=True)))
     print("====================================================")
     scrivo.close()
 def getagenda():
@@ -122,7 +124,7 @@ def getagenda():
     print("(Ordine per data)\n\n")
     print("====================================================")
     for node in soup.findAll('p',{'class':'day_description'}):
-        print ''.join(node.findAll(text=True))
+        print(string.join(node.findAll(text=True)))
     print("====================================================")
     scrivo.close()
 menu()
